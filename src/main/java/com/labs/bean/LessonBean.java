@@ -28,6 +28,12 @@ public class LessonBean {
     public void delete(Long id){
         em.remove(get(id));
     }
+
+    public  List<Lesson> getByStudent(Long id){
+        TypedQuery<Lesson> namedQuery = em.createNamedQuery("Lesson.getByStudent",Lesson.class).setParameter("ID", id);
+        return namedQuery.getResultList();
+
+    }
     public List<Lesson> getAll(){
         TypedQuery<Lesson> namedQuery = em.createNamedQuery("Lesson.getAll",Lesson.class);
         return namedQuery.getResultList();

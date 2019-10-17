@@ -7,19 +7,22 @@
 <body>
 
 <form action="addLesson" method="post">
-    <label for="fullname">Введите ФИО:
-        <input type="number" id="fullname" value="${lesson.student_id}" name="student_id" />
+
+    <label for="datetime">Дата и время занятия:
+        <input type="datetime-local" id="datetime" value="${lesson.localDateTime}" name="localDateTime"  />
     </label>  <br />
 
-    <label for="datetime">Введите дату и время:
-        <input type="datetime-local" id="datetime" value="${lesson.localDateTime}" name="localDateTime" min=${now} />
-    </label>  <br />
-    <select name="passenger">
+    <label>ФИО ученика:
+       ${student.fullname}
+    </label>
+
+    <select name="student_id" required>
+        <option value="${lesson.student_id}">Изменить</option>
         <c:forEach items="${students}" var="student">
-            <option selected="${lesson.student_id}" value="${student.id}"><c:out value="${student.fullname}" /></option>
+            <option value="${student.id}"><c:out value="${student.fullname}" /></option>
         </c:forEach>
     </select>
-
+    <br />
     <input type="hidden" name="id" value="${lesson.id}" />
     <input type="submit" value="Сохранить" />
 </form>

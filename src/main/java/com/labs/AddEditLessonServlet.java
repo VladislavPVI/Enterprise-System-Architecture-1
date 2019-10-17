@@ -30,11 +30,13 @@ public class AddEditLessonServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         List<Student> allStudent = studentBean.getAll();
         req.setAttribute("students",allStudent);
-        req.setAttribute("now", LocalDateTime.now());
+        req.setAttribute("now", LocalDateTime.now().withNano(0));
         if (req.getParameter("edit") != null) {
             long id = Long.valueOf(req.getParameter("edit"));
             Lesson lesson = lessonBean.get(id);
             req.setAttribute("lesson", lesson);
+            Student student = studentBean.get(lesson.getStudent_id());
+            req.setAttribute("student", student);
         }
 
         req.getRequestDispatcher("/addLesson.jsp").forward(req, resp);
@@ -47,6 +49,7 @@ public class AddEditLessonServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
 
       java.time.LocalDateTime dateTime = LocalDateTime.parse(req.getParameter("localDateTime"));
+      dateTime = dateTime.withNano(0);
       Long student_id = Long.valueOf(req.getParameter("student_id"));
 
         if(!req.getParameter("id").equals("")) {

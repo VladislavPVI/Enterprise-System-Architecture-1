@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="lesson")
-@NamedQuery(name = "Lesson.getAll", query = "SELECT u from Lesson u")
+@NamedQueries(value = {@NamedQuery(name = "Lesson.getAll", query = "SELECT u from Lesson u"),
+@NamedQuery(name = "Lesson.getByStudent", query = "SELECT u FROM Lesson u WHERE u.student_id = :ID")
+})
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
