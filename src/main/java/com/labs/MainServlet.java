@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
 @WebServlet("/list")
 public class MainServlet extends HttpServlet {
@@ -29,7 +32,13 @@ public class MainServlet extends HttpServlet {
         List<Student> allStudent = studentBean.getAll();
         req.setAttribute("students",allStudent);
         List<Lesson> allLesson = lessonBean.getAll();
+        ArrayList<String> allLessonToday = new ArrayList<>();
+        for (Lesson i : allLesson)
+                     if(i.getLocalDateTime().toLocalDate().equals(LocalDate.now()))
+                allLessonToday.add("ФИО: " + studentBean.get(i.getStudent_id()).getFullname()+" Время: "+i.getLocalDateTime().toLocalTime());
         req.setAttribute("lessons",allLesson);
+        req.setAttribute("lessons_today",allLessonToday);
+        req.setAttribute("now", DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).format(LocalDate.now()));
         req.getRequestDispatcher("/list.jsp").forward(req, resp);
     }
 }
